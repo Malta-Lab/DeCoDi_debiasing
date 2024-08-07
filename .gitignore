@@ -1,1 +1,4 @@
 *.pyc
+folder_tests/
+images/
+sdxl_models/

@@ -84,11 +84,11 @@ if default == True:
     text_encoder_lora_scale = None
     batch_size = 1
     # SAFE LATENT DIFFUSION
-    sld_guidance_scale = 1000 # If < 1, safety guidance is disabled.
-    sld_threshold = 0.01 # Threshold that separates the hyperplane between appropriate and inappropriate images.
-    sld_warmup_steps = 10 # SLD is only be applied for diffusion steps greater than sld_warmup_steps.
-    sld_momentum_scale = 0.3 # Scale of the SLD momentum to be added to the safety guidance at each diffusion step. If set to 0.0, momentum is disabled.
-    sld_mom_beta = 0.4 # Defines how safety guidance momentum builds up during warmup.Indicates how much of the previous momentum is kept.
+    sld_guidance_scale = 15000 # If < 1, safety guidance is disabled.
+    sld_threshold = 0.025 # Threshold that separates the hyperplane between appropriate and inappropriate images.
+    sld_warmup_steps = 7 # SLD is only be applied for diffusion steps greater than sld_warmup_steps.
+    sld_momentum_scale = 0.5 # Scale of the SLD momentum to be added to the safety guidance at each diffusion step. If set to 0.0, momentum is disabled.
+    sld_mom_beta =0.7 # Defines how safety guidance momentum builds up during warmup.Indicates how much of the previous momentum is kept.
     # REFINER HYPERPARAMETERS
     refiner_device = refiner._execution_device
     denoising_start = denoising_ratio
@@ -121,7 +121,7 @@ else:
 # RUN DENOISING LOOP - KEEPING ORIGINAL SDXL
 
 pickle_files_dir = os.path.join(base_dir, 'pickle files')
-pickle_file_path = os.path.join(pickle_files_dir, 'rnd_list_0_1000_50.pkl')
+pickle_file_path = os.path.join(pickle_files_dir, 'rnd_list.pkl')
 
 with open(pickle_file_path, 'rb') as f:
     rnd_list = pickle.load(f)
@@ -144,7 +144,7 @@ for i, rnd in enumerate(rnd_list):
     sld_momentum_scale, sld_mom_beta, text_encoder_lora_scale, batch_size, refiner_device, 
     denoising_start, strength, verbose=False)
     
-    mode_dir = os.path.join(images_dir, mode +"_safety_guidance_"+ str(enable_safety_guidance)+"_"+is_default)
+    mode_dir = os.path.join(images_dir, "gpt_test_" + mode +"_safety_guidance_"+ str(enable_safety_guidance)+"_"+is_default)
     os.makedirs(mode_dir, exist_ok = True)
 
     if enable_safety_guidance == False:
@@ -168,6 +168,5 @@ for i, rnd in enumerate(rnd_list):
         'user_name': ''
     })
 
-
-with open('original_imgs_'+mode+'.pkl', 'wb') as f:
+with open('original_imgs_' + mode + '_' + name_image + '.pkl', 'wb') as f:
     pickle.dump(original_imgs_list, f)

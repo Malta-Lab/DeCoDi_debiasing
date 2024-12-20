@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Annotation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            flex-direction: row;
+        }
+
+        .user-container,
+        .image-container {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-right: 20px;
+        }
+
+        .user-container > div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .image-container > div {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .radio-group > div {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 15px;
+            align-items: center;
+            flex-direction: row;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9e9e9;
+        }
+
+        .styled-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            background-color: #5e98d5;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .text-container {
+            margin-top: 20px;
+        }
+
+        .text-container h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .text-container h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .text-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Media query for responsiveness */
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .user-container, .image-container, .radio-group {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="user-container">
+            <h1>Welcome, {{ user_id }}!</h1>
+            <div>
+                <button class="styled-button" id="logoutButton">Logout</button>
+                <button class="styled-button" id="saveButton">Save to Pickle</button>
+            </div>
+        </div>
+
+        <div class="image-container">
+            <div>
+                <h1>Image to Annotate:</h1>
+                <h2 id="imageInfo"></h2>
+                <h2 id="title">Seed: {{ image_data[0]['rnd'] }}</h2>
+            </div>
+            <img id="image" src="{{ image_data[0]['img_path'] }}" alt="Image" width="800" height="800">
+        </div>
+        
+        <div class="radio-group">
+            <h1>Attribute Selection</h1>
+
+            <div>
+                <h3 style="margin-right: 10px;">Gender</h3>
+                <br>
+                <form id="radioFormGender">
+                    <label for="male">
+                        <input type="radio" id="male" name="pair1" value="male"> Male
+                    </label>
+                    <label for="female">
+                        <input type="radio" id="female" name="pair1" value="female"> Female
+                    </label>
+                </form>
+            </div>
+            
+            <div>
+                <h3 style="margin-right: 10px;">Ethnicity</h3>
+                <form id="radioFormEthnicity">
+                    <label for="caucasian">
+                        <input type="radio" id="caucasian" name="pair2" value="caucasian"> Caucasian
+                    </label>
+                    <label for="africanAmerican">
+                        <input type="radio" id="africanAmerican" name="pair2" value="africanAmerican"> African-American
+                    </label>
+                    <label for="asian">
+                        <input type="radio" id="asian" name="pair2" value="asian"> Asian
+                    </label>
+                    <label for="latino">
+                        <input type="radio" id="latino" name="pair2" value="latino"> Latino
+                    </label>
+                </form>
+            </div>
+
+            <div>
+                <h3 style="margin-right: 10px;">Apparent Age</h3>
+                <form id="radioFormAge">
+                    <label for="young">
+                        <input type="radio" id="young" name="pair3" value="young"> Young (0-35)
+                    </label>
+                    <label for="midAge">
+                        <input type="radio" id="midAge" name="pair3" value="midAge"> Middle-Age (35 - 55)
+                    </label>
+                    <label for="elderly">
+                        <input type="radio" id="elderly" name="pair3" value="elderly"> Elderly (+55)
+                    </label>
+                </form>
+            </div>
+        
+            <button class="styled-button" onclick="nextImage()">Next Image</button>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const imagePaths = {{ image_data | tojson }};
+        const imageElement = document.getElementById('image');
+        const imageInfoElement = document.getElementById('imageInfo');
+        const titleElement = document.getElementById('title');
+        const radioFormGender = document.getElementById('radioFormGender');
+        let imageData = [];
+
+        function getGender() {
+            const selectedGender = document.querySelector('input[name="pair1"]:checked');
+            return selectedGender ? selectedGender.value : null;
+        }
+
+        function getEthnicity() {
+            const selectedEthnicity = document.querySelector('input[name="pair2"]:checked');
+            return selectedEthnicity ? selectedEthnicity.value : null;
+        }
+
+        function getAge() {
+            const selectedAge = document.querySelector('input[name="pair3"]:checked');
+            return selectedAge ? selectedAge.value : null;
+        }
+
+        function nextImage() {
+            var userName = "{{ user_id }}";
+            const selectedGender = getGender();
+            const selectedEthnicity = getEthnicity();
+            const selectedAge = getAge();
+
+            // Check if any pair is missing selection
+            if (!selectedGender || !selectedEthnicity || !selectedAge) {
+                alert('One of the attributes is missing. Please select an option to all attributes.');
+                return; // Do not proceed to the next image
+            }
+
+            // Stores selected values on Radiobuttons into imagePaths.
+            // Can reload previous selected options when cycling through the images.
+            if (selectedGender !== null) {imagePaths[currentIndex]['gender'] = selectedGender;}
+            if (selectedEthnicity !== null) {imagePaths[currentIndex]['ethnicity'] = selectedEthnicity;}
+            if (selectedAge !== null) {imagePaths[currentIndex]['apparent_age'] = selectedAge;}
+
+            imageData[currentIndex] = {
+                'index': currentIndex,
+                'img_path':imagePaths[currentIndex]['img_path'],
+                'rnd':imagePaths[currentIndex]['rnd'],
+                'prompt':imagePaths[currentIndex]['prompt'], 
+                'safety_concept':imagePaths[currentIndex]['safety_concept'],
+                'gender': selectedGender,
+                'ethnicity':selectedEthnicity,
+                'apparent_age':selectedAge,
+                'user_name':userName
+            };
+           
+            currentIndex = (currentIndex + 1) % imagePaths.length;
+
+            // Update image and title
+            imageElement.src = imagePaths[currentIndex]['img_path'];
+            titleElement.textContent = "Seed: " + imagePaths[currentIndex]['rnd'];
+            
+            // Check the corresponding radio button based on the gender in the Python list
+            const genderInPythonList = imagePaths[currentIndex]['gender'];
+            const radioButtons = document.querySelectorAll(`input[name="pair1"]`);
+            // Loop through radio buttons and check the one that matches the gender in the Python list
+            radioButtons.forEach(radioButton => {
+                if (radioButton.value === genderInPythonList) {
+                    radioButton.checked = true;
+                } else {
+                    radioButton.checked = false;
+                }
+            });
+
+            // Check the corresponding radio button based on the gender in the Python list
+            const ethnicityInPythonList = imagePaths[currentIndex]['ethnicity'];
+            const radioButtonsEthnicity = document.querySelectorAll(`input[name="pair2"]`);
+            // Loop through radio buttons and check the one that matches the gender in the Python list
+            radioButtonsEthnicity.forEach(radioButton => {
+                if (radioButton.value === ethnicityInPythonList) {
+                    radioButton.checked = true;
+                } else {
+                    radioButton.checked = false;
+                }
+            
+            // Check the corresponding radio button based on the gender in the Python list
+            const ageInPythonList = imagePaths[currentIndex]['apparent_age'];
+            const radioButtonsAge = document.querySelectorAll(`input[name="pair3"]`);
+            // Loop through radio buttons and check the one that matches the gender in the Python list
+            radioButtonsAge.forEach(radioButton => {
+                if (radioButton.value === ageInPythonList) {
+                    radioButton.checked = true;
+                } else {
+                    radioButton.checked = false;
+                }
+            });
+
+            // Call the function to update the image index info
+            updateImageInfo();
+            });
+        }
+
+
+        function saveToPickle() {
+            nextImage(); // TESTING!
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(imageData), // Send the updated gender data
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        
+        // Add an event listener to the button
+        const saveButton = document.querySelector('#saveButton');
+        saveButton.addEventListener('click', function(event) {
+            // Display a confirmation dialog
+            const confirmed = window.confirm('Are all images annotated?');
+            // Check the user's response
+            if (confirmed) {saveToPickle();}
+            else {event.preventDefault();}
+        });
+
+        document.getElementById("logoutButton").addEventListener("click", function() {
+            const confirmed = confirm("Are you sure you want to Logout?");
+            if (confirmed) {
+                // Perform logout action here
+                // For example: redirect to logout endpoint or perform logout logic
+                window.location.href = "/login"; // Redirect to logout page
+            }
+        });
+
+        
+        function updateImageInfo() {
+            const currentIndexDisplay = currentIndex + 1;
+            const totalImages = imagePaths.length;
+            imageInfoElement.textContent = `Image ${currentIndexDisplay} of ${totalImages}`;
+        }
+        // Initial update when the page loads
+        updateImageInfo();
+    </script>
+
+</body>
+</html>

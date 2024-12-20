@@ -3,3 +3,5 @@ folder_tests/
 images/
 sdxl_models/
 .env
+folder_tests/
+__pycache__/

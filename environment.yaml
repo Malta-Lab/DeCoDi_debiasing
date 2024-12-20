@@ -18,7 +18,7 @@ dependencies:
   - bzip2=1.0.8=h5eee18b_6
   - ca-certificates=2024.7.2=h06a4308_0
   - certifi=2024.7.4=py38h06a4308_0
-  - cffi=1.16.0=py38h5eee18b_1
+  - cffi=1.16.0=py38h5eeeS18b_1
   - charset-normalizer=2.0.4=pyhd3eb1b0_0
   - comm=0.2.1=py38h06a4308_0
   - cyrus-sasl=2.1.28=h52b45da_1
@@ -203,4 +203,3 @@ dependencies:
       - transformers==4.42.4
       - triton==2.0.0
       - tzdata==2024.1
-prefix: /home/marconb/miniconda3/envs/master_debias_conda

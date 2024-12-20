@@ -47,7 +47,7 @@ except:
     print('Loading model to GPU...')
     base = StableDiffusionXLPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, 
                                                 variant="fp16", use_safetensors=True, cache_dir=cache_dir)
-    base.to('cuda:0')
+    base.to('cuda:2')
 
 # Instanciating SDXL Expert: Refiner
 try:
@@ -57,25 +57,30 @@ except:
     print('Loading model to GPU...')
     refiner = StableDiffusionXLImg2ImgPipeline.from_pretrained("stabilityai/stable-diffusion-xl-refiner-1.0", text_encoder_2=base.text_encoder_2,
         vae=base.vae, torch_dtype=torch.float16, use_safetensors=True, variant="fp16", cache_dir=cache_dir)
-    refiner.to('cuda:0')
+    refiner.to('cuda:2')
 
 # BASE HYPERPARAMETERS
 if mode == 'firefighter':
     prompt = "the face of firefighter"
-    safety_text_concept = ("man traits, very manly male man, rougth man, man, male, man, male, man, male")
+    safety_text_concept = "Caucasian, white, pale skin, Eurocentric, blonde, light eyes, light hair, fair complexion, European features, narrow nose, straight hair, light-skinned, Western traits, Nordic, Anglo-Saxon, European ethnicity"
+    #safety_text_concept = """man, male, rough, beard, stubble, rugged, harsh features, masculine, muscular, short hair"""
+    #("man, male, masculine, broad shoulders, strong jawline, beard, stubble, masculine clothing, muscular physique")
+    #('as distinctly male, with strong, masculine features that convey strength and reliability. He would have a square jawline, thick brows, and short, practical hair, perhaps slightly disheveled from the helmet. His skin might be rugged, with a few visible scars or lines from years of hard work in dangerous conditions. The eyes would be sharp and focused, reflecting determination and courage. His overall demeanor would exude traditional masculinity, reinforcing the stereotype that firefighting is a man’s role, both physically and symbolically')#('as that of a strong, rugged white man in his 30s, with a square jaw, short-cropped hair, and a hint of stubble. His skin might show signs of sun exposure or soot, emphasizing a life of hard, physical work. His expression would be serious yet courageous, with sharp, determined eyes that reflect bravery and resolve, embodying the traditional stereotype of a heroic and dependable protector.')#("Men, often described as masculine, rugged, or manly, can have a variety of appearances. Some men may have beards or mustaches, while others remain clean-shaven. They typically have more angular faces, with pronounced jawlines, thicker eyebrows, and stronger facial features. Many are seen as rough or rugged, embodying traits of strength or toughness, but their looks can vary widely from sleek and refined to bold and unpolished")#("Tough man, very masculine, strong male figure, man, male")#("man traits, very manly male man, rough man, man, male, man, male, man, male")
 elif mode == 'nurse':
     prompt = "the face of a nurse"
-    safety_text_concept = ("very womanly female woman, woman, female, woman, female, woman, female, woman, female")
+    safety_text_concept = "woman, female, feminine, soft features, delicate, long hair, ponytail, makeup, slender build, gentle expression, nurturing demeanor, soft smile, maternal, traditional femininity, skirt, dress, apron, feminine posture, small hands, petite frame, caring woman, young female, lady nurse, lipstick, subtle makeup, earrings, jewelry"
+    #("very womanly female woman, woman, female, woman, female, woman, female, woman, female")
 elif mode == 'business_leader':
-    prompt = "the face of a business leader"
-    safety_text_concept = ("an old man, caucasian, male, man, man, man, male, man, male, man, manly male, man traits")
+    prompt = "the face of a ceo"
+    safety_text_concept = "old, elderly, senior, wrinkles, gray hair, balding, receding hairline, aging, aged, mature face, crow's feet, sagging skin, white hair, glasses, stooped posture, frail, age spots, middle-aged, older man, older woman, senior executive, aging leader, late 50s, 60s, 70s, aged features"
+    #("an old man, caucasian, male, man, man, man, male, man, male, man, manly male, man traits")
 #prompt = "the face of firefighter" #1 "the face of firefighter" #2,3,4 "the face of a nurse" #5 "the face of a business leader"
 
 
 if default == True:
     num_inference_steps = 50
     denoising_ratio = 0.99 # Defines what % of steps to be run on base expert
-    guidance_scale = 5.0
+    guidance_scale = 7.5
     do_classifier_free_guidance = guidance_scale > 1.0
     num_images_per_prompt = 1
     device = base._execution_device
@@ -84,8 +89,8 @@ if default == True:
     text_encoder_lora_scale = None
     batch_size = 1
     # SAFE LATENT DIFFUSION
-    sld_guidance_scale = 15000 # If < 1, safety guidance is disabled.
-    sld_threshold = 0.025 # Threshold that separates the hyperplane between appropriate and inappropriate images.
+    sld_guidance_scale = 2000 # If < 1, safety guidance is disabled.
+    sld_threshold = 1 # Threshold that separates the hyperplane between appropriate and inappropriate images.
     sld_warmup_steps = 7 # SLD is only be applied for diffusion steps greater than sld_warmup_steps.
     sld_momentum_scale = 0.5 # Scale of the SLD momentum to be added to the safety guidance at each diffusion step. If set to 0.0, momentum is disabled.
     sld_mom_beta =0.7 # Defines how safety guidance momentum builds up during warmup.Indicates how much of the previous momentum is kept.
@@ -125,7 +130,8 @@ pickle_file_path = os.path.join(pickle_files_dir, 'rnd_list.pkl')
 
 with open(pickle_file_path, 'rb') as f:
     rnd_list = pickle.load(f)
-
+    #rnd_list = rnd_list[:15]
+#rnd_list = [54,185,191,239,264,401,405,703,1406]
 original_imgs_list = []
 
 #'/home/jordankp/sdxl/UI_label_images/static/images/'
@@ -144,14 +150,15 @@ for i, rnd in enumerate(rnd_list):
     sld_momentum_scale, sld_mom_beta, text_encoder_lora_scale, batch_size, refiner_device, 
     denoising_start, strength, verbose=False)
     
-    mode_dir = os.path.join(images_dir, "gpt_test_" + mode +"_safety_guidance_"+ str(enable_safety_guidance)+"_"+is_default)
+    mode_dir = os.path.join(images_dir, "ethnicity_" + mode +"_safety_guidance_"+ str(enable_safety_guidance)+"_"+is_default)
     os.makedirs(mode_dir, exist_ok = True)
 
     if enable_safety_guidance == False:
         name_image = 'original'
     else:
         name_image = 'debiased'
-        
+    
+    #file_name = f"{mode}_{name_image}_{is_default}_{rnd}_{safety_text_concept.replace(' ', '_').replace(',', '')}.jpg"
     file_name = f"{mode}_{name_image}_{is_default}_{rnd}.jpg"
     file_path = os.path.join(mode_dir,file_name)
 
@@ -168,5 +175,5 @@ for i, rnd in enumerate(rnd_list):
         'user_name': ''
     })
 
-with open('original_imgs_' + mode + '_' + name_image + '.pkl', 'wb') as f:
+with open('imgs_ethnicity_' + mode + '_' + name_image + '.pkl', 'wb') as f:
     pickle.dump(original_imgs_list, f)

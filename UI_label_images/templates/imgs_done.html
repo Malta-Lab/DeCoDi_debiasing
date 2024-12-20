@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thank you!</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h2, h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background-color: #5e98d5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #4379b3;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Thank you!</h1>
+    <h2>All images were annotated!</h2>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+
+    <script>
+        function logout() {
+            window.location.href = "/login";
+        }
+    </script>
+</body>
+</html>

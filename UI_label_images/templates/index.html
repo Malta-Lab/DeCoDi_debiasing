@@ -152,19 +152,19 @@
             </div>
             
             <div>
-                <h3 style="margin-right: 10px;">Ethnicity</h3>
-                <form id="radioFormEthnicity">
-                    <label for="caucasian">
-                        <input type="radio" id="caucasian" name="pair2" value="caucasian"> Caucasian
+                <h3 style="margin-right: 10px;">Race</h3>
+                <form id="radioFormRace">
+                    <label for="black">
+                        <input type="radio" id="black" name="pair2" value="black"> Black
                     </label>
-                    <label for="africanAmerican">
-                        <input type="radio" id="africanAmerican" name="pair2" value="africanAmerican"> African-American
+                    <label for="white">
+                        <input type="radio" id="white" name="pair2" value="white"> White
                     </label>
                     <label for="asian">
                         <input type="radio" id="asian" name="pair2" value="asian"> Asian
                     </label>
-                    <label for="latino">
-                        <input type="radio" id="latino" name="pair2" value="latino"> Latino
+                    <label for="indian">
+                        <input type="radio" id="indian" name="pair2" value="indian"> Indian
                     </label>
                 </form>
             </div>
@@ -202,9 +202,9 @@
             return selectedGender ? selectedGender.value : null;
         }
 
-        function getEthnicity() {
-            const selectedEthnicity = document.querySelector('input[name="pair2"]:checked');
-            return selectedEthnicity ? selectedEthnicity.value : null;
+        function getRace() {
+            const selectedRace = document.querySelector('input[name="pair2"]:checked');
+            return selectedRace ? selectedRace.value : null;
         }
 
         function getAge() {
@@ -215,11 +215,11 @@
         function nextImage() {
             var userName = "{{ user_id }}";
             const selectedGender = getGender();
-            const selectedEthnicity = getEthnicity();
+            const selectedRace = getRace();
             const selectedAge = getAge();
 
             // Check if any pair is missing selection
-            if (!selectedGender || !selectedEthnicity || !selectedAge) {
+            if (!selectedGender || !selectedRace || !selectedAge) {
                 alert('One of the attributes is missing. Please select an option to all attributes.');
                 return; // Do not proceed to the next image
             }
@@ -227,7 +227,7 @@
             // Stores selected values on Radiobuttons into imagePaths.
             // Can reload previous selected options when cycling through the images.
             if (selectedGender !== null) {imagePaths[currentIndex]['gender'] = selectedGender;}
-            if (selectedEthnicity !== null) {imagePaths[currentIndex]['ethnicity'] = selectedEthnicity;}
+            if (selectedRace !== null) {imagePaths[currentIndex]['race'] = selectedRace;}
             if (selectedAge !== null) {imagePaths[currentIndex]['apparent_age'] = selectedAge;}
 
             imageData[currentIndex] = {
@@ -237,7 +237,7 @@
                 'prompt':imagePaths[currentIndex]['prompt'], 
                 'safety_concept':imagePaths[currentIndex]['safety_concept'],
                 'gender': selectedGender,
-                'ethnicity':selectedEthnicity,
+                'race':selectedRace,
                 'apparent_age':selectedAge,
                 'user_name':userName
             };
@@ -261,11 +261,11 @@
             });
 
             // Check the corresponding radio button based on the gender in the Python list
-            const ethnicityInPythonList = imagePaths[currentIndex]['ethnicity'];
-            const radioButtonsEthnicity = document.querySelectorAll(`input[name="pair2"]`);
+            const raceInPythonList = imagePaths[currentIndex]['race'];
+            const radioButtonsRace = document.querySelectorAll(`input[name="pair2"]`);
             // Loop through radio buttons and check the one that matches the gender in the Python list
-            radioButtonsEthnicity.forEach(radioButton => {
-                if (radioButton.value === ethnicityInPythonList) {
+            radioButtonsRace.forEach(radioButton => {
+                if (radioButton.value === raceInPythonList) {
                     radioButton.checked = true;
                 } else {
                     radioButton.checked = false;

@@ -4,3 +4,5 @@ images/
 sdxl_models/
 .env
 __pycache__/
+evaluation/eval_lucas.ipynb
+evaluation/debias_experiment_export_test.csv

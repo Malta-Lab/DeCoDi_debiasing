@@ -1,0 +1,3 @@
+gender,count_debiased,count_original,percentage_debiased,percentage_original
+female,20.0,199.0,10.050251256281408,100.0
+male,179.0,,89.94974874371859,

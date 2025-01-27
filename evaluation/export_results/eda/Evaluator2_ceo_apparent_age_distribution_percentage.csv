@@ -1,0 +1,4 @@
+apparent_age,count_debiased,count_original,percentage_debiased,percentage_original
+elderly,1.0,62.0,0.5291005291005291,32.804232804232804
+middle-age,7.0,123.0,3.7037037037037037,65.07936507936508
+young,181.0,4.0,95.76719576719577,2.1164021164021163

@@ -20,13 +20,13 @@ with open('/mnt/G-SSD/marco_mestrado/master_debias/pickle files/debiased_imgs_nu
 with open('/mnt/G-SSD/marco_mestrado/master_debias/pickle files/original_imgs_nurse.pkl', 'rb') as f:
     original_imgs_nurse = pickle.load(f)
 
-with open('/mnt/G-SSD/marco_mestrado/master_debias/pickle files/debiased_imgs_business_leader.pkl', 'rb') as f:
-    debiased_imgs_business_leader = pickle.load(f)
-with open('/mnt/G-SSD/marco_mestrado/master_debias/pickle files/original_imgs_business_leader.pkl', 'rb') as f:
-    original_imgs_business_leader = pickle.load(f)
+with open('/mnt/G-SSD/marco_mestrado/master_debias/pickle files/debiased_imgs_ceo.pkl', 'rb') as f:
+    debiased_imgs_ceo = pickle.load(f)
+with open('/mnt/G-SSD/marco_mestrado/master_debias/pickle files/original_imgs_ceo.pkl', 'rb') as f:
+    original_imgs_ceo = pickle.load(f)
 
 # load all available images
-imgs_list = debiased_imgs_firefighter+original_imgs_firefighter+debiased_imgs_nurse+original_imgs_nurse+debiased_imgs_business_leader+original_imgs_business_leader
+imgs_list = debiased_imgs_firefighter+original_imgs_firefighter+debiased_imgs_nurse+original_imgs_nurse+debiased_imgs_ceo+original_imgs_ceo
 random.shuffle(imgs_list) # shuffles the order of images at randomF
 
 @app.route('/')

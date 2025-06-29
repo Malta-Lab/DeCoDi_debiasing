@@ -6,3 +6,5 @@ sdxl_models/
 __pycache__/
 evaluation/eval_lucas.ipynb
 evaluation/debias_experiment_export_test.csv
+.ruff_cache/
+/sdxl_models/

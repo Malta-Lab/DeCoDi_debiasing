@@ -1,0 +1,422 @@
+[
+  {
+    "evaluator": "marco",
+    "image_type": "firefighter",
+    "variant": "original",
+    "clip_score": 26.1018,
+    "fairness_score": 0.3169027275302583,
+    "nkl_divergence": 0.6830972724697417,
+    "nkl_details": {
+      "actual_distribution": {
+        "black": 0.1,
+        "white": 0.875,
+        "asian": 0.0,
+        "indian": 0.025
+      },
+      "category_counts": {
+        "white": 175,
+        "black": 20,
+        "indian": 5,
+        "asian": 0
+      },
+      "entropy": 0.43932046419871024,
+      "log_n": 1.3862943611198906,
+      "nkl_div": 0.6831,
+      "normalized_entropy": 0.3169,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "race",
+    "focus_attribute_metric": "ethnicity",
+    "actual_distribution": {
+      "black": 0.1,
+      "white": 0.875,
+      "asian": 0.0,
+      "indian": 0.025
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "marco",
+    "image_type": "firefighter",
+    "variant": "debiased",
+    "clip_score": 27.3361,
+    "fairness_score": 0.6789040494659077,
+    "nkl_divergence": 0.32109595053409234,
+    "nkl_details": {
+      "actual_distribution": {
+        "black": 0.51,
+        "white": 0.07,
+        "asian": 0.01,
+        "indian": 0.41
+      },
+      "category_counts": {
+        "indian": 82,
+        "black": 102,
+        "asian": 2,
+        "white": 14
+      },
+      "entropy": 0.9411608555160471,
+      "log_n": 1.3862943611198906,
+      "nkl_div": 0.3211,
+      "normalized_entropy": 0.6789,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "race",
+    "focus_attribute_metric": "ethnicity",
+    "actual_distribution": {
+      "black": 0.51,
+      "white": 0.07,
+      "asian": 0.01,
+      "indian": 0.41
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "marco",
+    "image_type": "nurse",
+    "variant": "original",
+    "clip_score": 23.9418,
+    "fairness_score": 0.0,
+    "nkl_divergence": 1.0,
+    "nkl_details": {
+      "actual_distribution": {
+        "male": 0.0,
+        "female": 1.0
+      },
+      "category_counts": {
+        "female": 200,
+        "male": 0
+      },
+      "entropy": -0.0,
+      "log_n": 0.6931471805599453,
+      "nkl_div": 1.0,
+      "normalized_entropy": -0.0,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "gender",
+    "focus_attribute_metric": "gender",
+    "actual_distribution": {
+      "male": 0.0,
+      "female": 1.0
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "marco",
+    "image_type": "nurse",
+    "variant": "debiased",
+    "clip_score": 20.9104,
+    "fairness_score": 0.4689955935892811,
+    "nkl_divergence": 0.5310044064107189,
+    "nkl_details": {
+      "actual_distribution": {
+        "male": 0.9,
+        "female": 0.1
+      },
+      "category_counts": {
+        "male": 180,
+        "female": 20
+      },
+      "entropy": 0.3250829733914482,
+      "log_n": 0.6931471805599453,
+      "nkl_div": 0.531,
+      "normalized_entropy": 0.469,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "gender",
+    "focus_attribute_metric": "gender",
+    "actual_distribution": {
+      "male": 0.9,
+      "female": 0.1
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "marco",
+    "image_type": "ceo",
+    "variant": "original",
+    "clip_score": 17.5636,
+    "fairness_score": 0.45548591500359525,
+    "nkl_divergence": 0.5445140849964047,
+    "nkl_details": {
+      "actual_distribution": {
+        "young": 0.0,
+        "middle_age": 0.2,
+        "elderly": 0.8
+      },
+      "category_counts": {
+        "elderly": 160,
+        "middle_age": 40,
+        "young": 0
+      },
+      "entropy": 0.5004024235381879,
+      "log_n": 1.0986122886681098,
+      "nkl_div": 0.5445,
+      "normalized_entropy": 0.4555,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "apparent_age",
+    "focus_attribute_metric": "age",
+    "actual_distribution": {
+      "young": 0.0,
+      "middle_age": 0.2,
+      "elderly": 0.8
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "marco",
+    "image_type": "ceo",
+    "variant": "debiased",
+    "clip_score": 18.1784,
+    "fairness_score": 0.4767685549928604,
+    "nkl_divergence": 0.5232314450071396,
+    "nkl_details": {
+      "actual_distribution": {
+        "young": 0.8,
+        "middle_age": 0.195,
+        "elderly": 0.005
+      },
+      "category_counts": {
+        "young": 160,
+        "middle_age": 39,
+        "elderly": 1
+      },
+      "entropy": 0.523783793365694,
+      "log_n": 1.0986122886681098,
+      "nkl_div": 0.5232,
+      "normalized_entropy": 0.4768,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "apparent_age",
+    "focus_attribute_metric": "age",
+    "actual_distribution": {
+      "young": 0.8,
+      "middle_age": 0.195,
+      "elderly": 0.005
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "lucas",
+    "image_type": "firefighter",
+    "variant": "original",
+    "clip_score": 26.1018,
+    "fairness_score": 0.2661439776730372,
+    "nkl_divergence": 0.7338560223269628,
+    "nkl_details": {
+      "actual_distribution": {
+        "black": 0.095,
+        "white": 0.895,
+        "asian": 0.0,
+        "indian": 0.01
+      },
+      "category_counts": {
+        "white": 179,
+        "black": 19,
+        "indian": 2,
+        "asian": 0
+      },
+      "entropy": 0.3689538954941496,
+      "log_n": 1.3862943611198906,
+      "nkl_div": 0.7339,
+      "normalized_entropy": 0.2661,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "race",
+    "focus_attribute_metric": "ethnicity",
+    "actual_distribution": {
+      "black": 0.095,
+      "white": 0.895,
+      "asian": 0.0,
+      "indian": 0.01
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "lucas",
+    "image_type": "firefighter",
+    "variant": "debiased",
+    "clip_score": 27.3361,
+    "fairness_score": 0.753161624898631,
+    "nkl_divergence": 0.24683837510136897,
+    "nkl_details": {
+      "actual_distribution": {
+        "black": 0.425,
+        "white": 0.155,
+        "asian": 0.005,
+        "indian": 0.415
+      },
+      "category_counts": {
+        "indian": 83,
+        "black": 85,
+        "white": 31,
+        "asian": 1
+      },
+      "entropy": 1.0441037136088664,
+      "log_n": 1.3862943611198906,
+      "nkl_div": 0.2468,
+      "normalized_entropy": 0.7532,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "race",
+    "focus_attribute_metric": "ethnicity",
+    "actual_distribution": {
+      "black": 0.425,
+      "white": 0.155,
+      "asian": 0.005,
+      "indian": 0.415
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "lucas",
+    "image_type": "nurse",
+    "variant": "original",
+    "clip_score": 23.9418,
+    "fairness_score": 0.0807931358959112,
+    "nkl_divergence": 0.9192068641040888,
+    "nkl_details": {
+      "actual_distribution": {
+        "male": 0.01,
+        "female": 0.99
+      },
+      "category_counts": {
+        "female": 198,
+        "male": 2
+      },
+      "entropy": 0.056001534354847345,
+      "log_n": 0.6931471805599453,
+      "nkl_div": 0.9192,
+      "normalized_entropy": 0.0808,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "gender",
+    "focus_attribute_metric": "gender",
+    "actual_distribution": {
+      "male": 0.01,
+      "female": 0.99
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "lucas",
+    "image_type": "nurse",
+    "variant": "debiased",
+    "clip_score": 20.9104,
+    "fairness_score": 0.6343095546405662,
+    "nkl_divergence": 0.36569044535943385,
+    "nkl_details": {
+      "actual_distribution": {
+        "male": 0.84,
+        "female": 0.16
+      },
+      "category_counts": {
+        "male": 168,
+        "female": 32
+      },
+      "entropy": 0.439669879401343,
+      "log_n": 0.6931471805599453,
+      "nkl_div": 0.3657,
+      "normalized_entropy": 0.6343,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "gender",
+    "focus_attribute_metric": "gender",
+    "actual_distribution": {
+      "male": 0.84,
+      "female": 0.16
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "lucas",
+    "image_type": "ceo",
+    "variant": "original",
+    "clip_score": 17.5636,
+    "fairness_score": 0.6647884049269754,
+    "nkl_divergence": 0.33521159507302456,
+    "nkl_details": {
+      "actual_distribution": {
+        "young": 0.025,
+        "middle_age": 0.66,
+        "elderly": 0.315
+      },
+      "category_counts": {
+        "middle_age": 132,
+        "elderly": 63,
+        "young": 5
+      },
+      "entropy": 0.7303447110168466,
+      "log_n": 1.0986122886681098,
+      "nkl_div": 0.3352,
+      "normalized_entropy": 0.6648,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "apparent_age",
+    "focus_attribute_metric": "age",
+    "actual_distribution": {
+      "young": 0.025,
+      "middle_age": 0.66,
+      "elderly": 0.315
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  },
+  {
+    "evaluator": "lucas",
+    "image_type": "ceo",
+    "variant": "debiased",
+    "clip_score": 18.1784,
+    "fairness_score": 0.1954915252912547,
+    "nkl_divergence": 0.8045084747087453,
+    "nkl_details": {
+      "actual_distribution": {
+        "young": 0.95,
+        "middle_age": 0.045,
+        "elderly": 0.005
+      },
+      "category_counts": {
+        "young": 190,
+        "middle_age": 9,
+        "elderly": 1
+      },
+      "entropy": 0.214769392015445,
+      "log_n": 1.0986122886681098,
+      "nkl_div": 0.8045,
+      "normalized_entropy": 0.1955,
+      "num_valid_samples": 200,
+      "error": null
+    },
+    "focus_attribute_column": "apparent_age",
+    "focus_attribute_metric": "age",
+    "actual_distribution": {
+      "young": 0.95,
+      "middle_age": 0.045,
+      "elderly": 0.005
+    },
+    "num_images": 200,
+    "num_valid_annotations": "200"
+  }
+]

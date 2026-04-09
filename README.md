@@ -289,3 +289,18 @@ The DeCoDi method implements bias correction through the following key steps:
 - **Threshold Application**: Applied when `(noise_pred_text - noise_pred_bias) >= threshold`
 - **Debiasing Guidance**: `guidance = (noise_pred_bias - noise_pred_uncond) * scale + momentum`
 - **Final Correction**: `noise_pred = noise_pred_uncond + cfg_scale * (base_guidance - debiasing_guidance)`
+
+## Citation
+
+If you use this work, please cite:
+
+```bibtex
+@inproceedings{kupssinsku2026inference,
+  title={Inference Time Debiasing Concepts},
+  author={Kupssinsk{\"u}, Lucas S and Bochernitsan, Marco N and Kopper, Jordan},
+  booktitle={Intelligent Systems: 35th Brazilian Conference, BRACIS 2025, Fortaleza-CE, Brazil, September 29--October 2, 2025, Proceedings, Part II},
+  pages={79},
+  year={2026},
+  organization={Springer Nature}
+}
+```
